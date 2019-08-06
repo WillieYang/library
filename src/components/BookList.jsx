@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import MaterialTable from 'material-table'
 import {
   TextField, Dialog, DialogActions, Button,
   DialogContent, DialogContentText, DialogTitle
 } from '@material-ui/core';
+import { getBookList, createBook } from '../store/bookList/bookList.actions';
 
 class BookList extends Component {
   constructor() {
     super();
-    this.state = { 
+    this.state = {
       showDialog: false,
       bookName: '',
       description: '',
@@ -16,22 +18,23 @@ class BookList extends Component {
     };
   }
 
+  componentDidMount() {
+    const { getBookList } = this.props;
+    getBookList();
+  }
+
   showAddBook = () => {
     this.setState({ showDialog: true });
   }
 
-  handleBookName = bookName => event => {
-    this.setState({ bookName: event.target.value });
-    console.log(event.target.value);
-  }
-
-  handleDescription = description => event => {
-    this.setState({ description: event.target.value });
-    console.log(event.target.value);
-  }
-
-  handleStorage = description => event => {
-    this.setState({ storage: event.target.value });
+  handleChange = type => event => {
+    if (type === 'bookName') {
+      this.setState({ bookName: event.target.value });
+    } else if (type === 'description') {
+      this.setState({ description: event.target.value });
+    } else if (type === 'storage') {
+      this.setState({ storage: event.target.value });
+    }
     console.log(event.target.value);
   }
 
@@ -39,78 +42,104 @@ class BookList extends Component {
     this.setState({ showDialog: false });
   }
 
+  handleAddBook = async () => {
+    const { bookName, description, storage } = this.state;
+    const { getBookList, createBook } = this.props;
+    const data = { name: bookName, description, storage };
+    console.log('data', data);
+    await createBook(data);
+    await getBookList();
+    this.setState({ showDialog: false });
+  }
 
   render() {
-    const {showDialog} = this.state;
+    const { showDialog } = this.state;
+    const { bookList } = this.props;
+    console.log('booklist', bookList);
     const columns = [
-      { title: 'Book Name', field: 'bookName' },
+      { title: 'Book Name', field: 'name' },
       { title: 'Description', field: 'description' },
       { title: 'Storage', field: 'storage', type: 'numeric' },
     ];
-    const data = [
-      { bookName: 'IT Chapter 2', description: 'Story about five kids with a clown', storage: 15 },
-      { bookName: 'Lord of Ring', description: 'Fantastic travel in the Middle World', storage: 13 },
-    ];
+    // const data = [
+    //   { bookName: 'IT Chapter 2', description: 'Story about five kids with a clown', storage: 15 },
+    //   { bookName: 'Lord of Ring', description: 'Fantastic travel in the Middle World', storage: 13 },
+    // ];
     return (
       <>
         <div id="button" style={{ height: '56px' }}>
           <Button variant="contained" color="primary" style={{ margin: '10px', float: 'right' }} onClick={this.showAddBook}>Add Book</Button>
         </div>
         <Dialog open={showDialog} onClose={this.handleClose} aria-labelledby="form-dialog-title">
-            <DialogTitle id="form-dialog-title">Add Book</DialogTitle>
-            <DialogContent>
-              <DialogContentText>
-                Please input the details about the corresponding book.
+          <DialogTitle id="form-dialog-title">Add Book</DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              Please input the details about the corresponding book.
               </DialogContentText>
-              <TextField
-                id="bookName"
-                label="Book Name"
-                onChange={this.handleBookName('bookName')}
-                defaultValue=""
-                style={{ paddingRight: '120px' }}
-                InputLabelProps={{
-                  shrink: true,
-                }}
-              />
-              <TextField
-                id="storage"
-                label="Storage"
-                onChange={this.handleStorage('storage')}
-                defaultValue=""
-                InputLabelProps={{
-                  shrink: true,
-                }}
-              />
-              <TextField
-                id="description"
-                label="Description"
-                onChange={this.handleDescription('description')}
-                defaultValue=""
-                margin="normal"
-                multiline
-                rows="3"
-                InputLabelProps={{
-                  shrink: true,
-                }}
-              />
-            </DialogContent>
-            <DialogActions>
-              <Button onClick={this.handleClose} color="primary">
-                Cancel
+            <TextField
+              id="bookName"
+              label="Book Name"
+              onChange={this.handleChange('bookName')}
+              defaultValue=""
+              style={{ paddingRight: '120px' }}
+              InputLabelProps={{
+                shrink: true,
+              }}
+            />
+            <TextField
+              id="storage"
+              label="Storage"
+              onChange={this.handleChange('storage')}
+              defaultValue=""
+              type="number"
+              InputLabelProps={{
+                shrink: true,
+              }}
+            />
+            <TextField
+              id="description"
+              label="Description"
+              onChange={this.handleChange('description')}
+              defaultValue=""
+              margin="normal"
+              multiline
+              rows="3"
+              InputLabelProps={{
+                shrink: true,
+              }}
+            />
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={this.handleClose} color="primary">
+              Cancel
           </Button>
-              <Button onClick={this.handleClose} color="primary">
-                Submit
+            <Button onClick={this.handleAddBook} color="primary">
+              Submit
           </Button>
-            </DialogActions>
-          </Dialog>
+          </DialogActions>
+        </Dialog>
         <MaterialTable
           title="Book Storage"
           columns={columns}
-          data={data}
+          data={bookList}
         />
       </>
     )
   }
 }
 
-export default BookList;
+const mapStateToProps = state => ({
+  bookList: state.bookList,
+});
+
+const mapDispatchToProps = (dispatch, ownProps) => ({
+  getBookList(data) {
+    dispatch(getBookList(data));
+  },
+  createBook(data) {
+    dispatch(createBook(data));
+  },
+});
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(BookList);
