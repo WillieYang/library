@@ -6,7 +6,7 @@ import * as constants from './reservationList.constants';
 const getReservationList = data => async (dispatch, getState) => {
   dispatch({ type: constants.GET_RESERVATION_LIST_START, data: [] });
   try {
-    const res = await API.get('reservations');
+    const res = await API.get('/api/reservations');
     dispatch({ type: constants.RESERVATION_LIST, data: res.data });
   } catch (e) {
     console.log('Failed', e);
@@ -17,7 +17,7 @@ const getReservationList = data => async (dispatch, getState) => {
 const createReservation = data => async (dispatch, getState) => {
   try {
     console.log('action data', data);
-    await API.post('reservations', Qs.stringify(data));
+    await API.post('/api/reservations', Qs.stringify(data));
     // dispatch({ type: constants.RESERVATION_LIST, data: res.data });
   } catch (e) {
     console.log('Failed', e);
