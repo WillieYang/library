@@ -5,10 +5,8 @@ const API = axios.create({
   responseType: 'json',
   headers: {
     'Content-Type': 'application/x-www-form-urlencoded',
-    'Accept': 'application/json',
+    Accept: 'application/json',
   },
 });
 
-export {
-  API,
-};
+export default API;

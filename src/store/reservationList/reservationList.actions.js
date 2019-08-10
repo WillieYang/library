@@ -1,5 +1,5 @@
-import { API } from '../../utils/API';
-import Qs from 'qs'
+import Qs from 'qs';
+import API from '../../utils/API';
 
 import * as constants from './reservationList.constants';
 
