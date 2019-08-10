@@ -1,19 +1,26 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import MaterialTable from 'material-table';
 import {
   Dialog, DialogActions, Button,
-  DialogContent, DialogContentText, DialogTitle
+  DialogContent, DialogContentText, DialogTitle,
 } from '@material-ui/core';
-import { createReservation, getReservationList, clearReservation } from '../store/reservationList/reservationList.actions'
+import PropTypes from 'prop-types';
+import { createReservation, getReservationList, clearReservation } from '../store/reservationList/reservationList.actions';
 
 class ReservationList extends Component {
+  static propTypes = {
+    getReservationList: PropTypes.func.isRequired,
+    clearReservation: PropTypes.func.isRequired,
+    reservationList: PropTypes.array.isRequired,
+  }
+
   constructor() {
     super();
     this.state = {
       showDialog: false,
       reservationId: '',
-    }
+    };
   }
 
   componentDidMount() {
@@ -48,16 +55,12 @@ class ReservationList extends Component {
       { title: 'Start Date', field: 'startDate' },
       { title: 'End Date', field: 'endDate' },
     ];
-    // const data = [
-    //   { username: 'willie', bookName: 'IT Chapter 2', startDate: '2017-05-24T10:30', endDate: '2017-07-24T10:30' },
-    //   { username: 'bill', bookName: 'Lord of Ring', startDate: '2017-05-28T10:30', endDate: '2017-08-29T10:30' },
-    // ];
     const actions = [
       {
         icon: 'cancel',
         tooltip: 'Clear Reservation',
         onClick: this.clearReservation,
-      }
+      },
     ];
     return (
       <>
@@ -67,7 +70,7 @@ class ReservationList extends Component {
           data={reservationList}
           actions={actions}
           options={{
-            actionsColumnIndex: -1
+            actionsColumnIndex: -1,
           }}
         />
         <Dialog open={showDialog} onClose={this.handleClose} aria-labelledby="form-dialog-title">
@@ -80,14 +83,14 @@ class ReservationList extends Component {
           <DialogActions>
             <Button onClick={this.handleClose} color="primary">
               Cancel
-          </Button>
+            </Button>
             <Button onClick={this.handleClearReservation} color="primary">
               Clear
-          </Button>
+            </Button>
           </DialogActions>
         </Dialog>
       </>
-    )
+    );
   }
 }
 

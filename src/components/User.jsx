@@ -3,12 +3,19 @@ import { connect } from 'react-redux';
 import MaterialTable from 'material-table';
 import {
   TextField, Dialog, DialogActions, Button,
-  DialogContent, DialogContentText, DialogTitle
+  DialogContent, DialogContentText, DialogTitle,
 } from '@material-ui/core';
+import PropTypes from 'prop-types';
 import { getBookList } from '../store/bookList/bookList.actions';
-import { createReservation } from '../store/reservationList/reservationList.actions'
+import { createReservation } from '../store/reservationList/reservationList.actions';
 
 class User extends Component {
+  static propTypes = {
+    getBookList: PropTypes.func.isRequired,
+    createReservation: PropTypes.func.isRequired,
+    bookList: PropTypes.array.isRequired,
+  }
+
   constructor() {
     super();
     this.state = {
@@ -19,7 +26,7 @@ class User extends Component {
       bookId: '',
       bookName: '',
       description: '',
-    }
+    };
   }
 
   componentDidMount() {
@@ -28,9 +35,12 @@ class User extends Component {
   }
 
   reserveBooks = (event, rowData) => {
-    console.log('reserveBooks')
+    console.log('reserveBooks');
     this.setState({
-      showDialog: true, bookId: rowData._id, description: rowData.description, bookName: rowData.name,
+      showDialog: true,
+      bookId: rowData._id,
+      description: rowData.description,
+      bookName: rowData.name,
     });
   }
 
@@ -38,7 +48,7 @@ class User extends Component {
     this.setState({ showDialog: false });
   }
 
-  handleChange = type => event => {
+  handleChange = type => (event) => {
     if (type === 'startDate') {
       this.setState({ startDate: event.target.value });
     } else if (type === 'endDate') {
@@ -50,8 +60,12 @@ class User extends Component {
   }
 
   handleReservation = async () => {
-    const { startDate, endDate, username, bookId, bookName, description } = this.state;
-    const data = { startDate, endDate, username, bookId, bookName, description };
+    const {
+      startDate, endDate, username, bookId, bookName, description,
+    } = this.state;
+    const data = {
+      startDate, endDate, username, bookId, bookName, description,
+    };
     const { createReservation } = this.props;
     await createReservation(data);
     await this.setState({ showDialog: false });
@@ -66,7 +80,7 @@ class User extends Component {
       { title: 'Count', field: 'storage', type: 'numeric' },
       { title: 'Count Left', field: 'countLeft', type: 'numeric' },
     ];
-    bookList.forEach(element => {
+    bookList.forEach((element) => {
       element.countLeft = Math.floor(Math.random() * 5);
     });
 
@@ -75,13 +89,13 @@ class User extends Component {
         icon: 'library_books',
         tooltip: 'Reserve Book',
         onClick: this.reserveBooks,
-      }
+      },
     ];
     return (
       <>
         <div>
           User
-      </div>
+        </div>
         <div style={{ padding: '40px 10px' }}>
           <MaterialTable
             title="Reserve Books You Like"
@@ -89,7 +103,7 @@ class User extends Component {
             data={bookList}
             actions={actions}
             options={{
-              actionsColumnIndex: -1
+              actionsColumnIndex: -1,
             }}
           />
           <Dialog open={showDialog} onClose={this.handleClose} aria-labelledby="form-dialog-title">
@@ -133,15 +147,15 @@ class User extends Component {
             <DialogActions>
               <Button onClick={this.handleClose} color="primary">
                 Cancel
-          </Button>
+              </Button>
               <Button onClick={this.handleReservation} color="primary">
                 Submit
-          </Button>
+              </Button>
             </DialogActions>
           </Dialog>
         </div>
       </>
-    )
+    );
   }
 }
 

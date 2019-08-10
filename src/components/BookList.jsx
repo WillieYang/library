@@ -1,13 +1,20 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import MaterialTable from 'material-table'
+import MaterialTable from 'material-table';
 import {
   TextField, Dialog, DialogActions, Button,
-  DialogContent, DialogContentText, DialogTitle
+  DialogContent, DialogContentText, DialogTitle,
 } from '@material-ui/core';
+import PropTypes from 'prop-types';
 import { getBookList, createBook } from '../store/bookList/bookList.actions';
 
 class BookList extends Component {
+  static propTypes = {
+    getBookList: PropTypes.func.isRequired,
+    createBook: PropTypes.func.isRequired,
+    bookList: PropTypes.array.isRequired,
+  }
+
   constructor() {
     super();
     this.state = {
@@ -27,7 +34,7 @@ class BookList extends Component {
     this.setState({ showDialog: true });
   }
 
-  handleChange = type => event => {
+  handleChange = type => (event) => {
     if (type === 'bookName') {
       this.setState({ bookName: event.target.value });
     } else if (type === 'description') {
@@ -61,10 +68,6 @@ class BookList extends Component {
       { title: 'Description', field: 'description' },
       { title: 'Storage', field: 'storage', type: 'numeric' },
     ];
-    // const data = [
-    //   { bookName: 'IT Chapter 2', description: 'Story about five kids with a clown', storage: 15 },
-    //   { bookName: 'Lord of Ring', description: 'Fantastic travel in the Middle World', storage: 13 },
-    // ];
     return (
       <>
         <div id="button" style={{ height: '56px' }}>
@@ -75,7 +78,7 @@ class BookList extends Component {
           <DialogContent>
             <DialogContentText>
               Please input the details about the corresponding book.
-              </DialogContentText>
+            </DialogContentText>
             <TextField
               id="bookName"
               label="Book Name"
@@ -112,10 +115,10 @@ class BookList extends Component {
           <DialogActions>
             <Button onClick={this.handleClose} color="primary">
               Cancel
-          </Button>
+            </Button>
             <Button onClick={this.handleAddBook} color="primary">
               Submit
-          </Button>
+            </Button>
           </DialogActions>
         </Dialog>
         <MaterialTable
@@ -124,7 +127,7 @@ class BookList extends Component {
           data={bookList}
         />
       </>
-    )
+    );
   }
 }
 
