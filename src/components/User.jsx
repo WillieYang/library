@@ -5,6 +5,7 @@ import {
   TextField, Dialog, DialogActions, Button,
   DialogContent, DialogContentText, DialogTitle,
 } from '@material-ui/core';
+import EventSeatIcon from '@material-ui/icons/EventSeat';
 import PropTypes from 'prop-types';
 import { getBookList } from '../store/bookList/bookList.actions';
 import { createReservation } from '../store/reservationList/reservationList.actions';
@@ -86,7 +87,7 @@ class User extends Component {
 
     const actions = [
       {
-        icon: 'library_books',
+        icon: () => <EventSeatIcon />,
         tooltip: 'Reserve Book',
         onClick: this.reserveBooks,
       },
