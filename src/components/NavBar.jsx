@@ -11,7 +11,7 @@ class NavBar extends Component {
         <AppBar position="static">
           <Toolbar>
             <Typography variant="h6" color="inherit">
-              <NavLink style={{ textDecoration: 'none', color: 'white' }} exact to="/">Dell Task & Library Management System</NavLink>
+              <NavLink style={{ textDecoration: 'none', color: 'white' }} exact to="/">Library Management System</NavLink>
             </Typography>
           </Toolbar>
         </AppBar>
