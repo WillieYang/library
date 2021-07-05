@@ -3,6 +3,8 @@ import {
   Container, Typography, TextField,
   FormControlLabel, Checkbox, Button,
 } from '@material-ui/core';
+import { Link, Route, Switch } from 'react-router-dom';
+import Admin from './Admin';
 
 class Login extends Component {
   render() {
@@ -11,7 +13,7 @@ class Login extends Component {
         <Container component="main" maxWidth="xs">
           <div>
             <Typography component="h1" variant="h5">
-              Sign in
+              Login
             </Typography>
             <form noValidate>
               <TextField
@@ -54,7 +56,9 @@ class Login extends Component {
                   //   </Button>
                   // ) : (
                 <>
-                  <span>Not a Member</span>
+                  <Link to="/admin" className="noDecoration">
+                    <span className="normalItalic">Not a Member, register!</span>
+                  </Link>
                   <Button
                     fullWidth
                     variant="contained"

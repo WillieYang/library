@@ -94,9 +94,6 @@ class User extends Component {
     ];
     return (
       <>
-        <div>
-          User
-        </div>
         <div style={{ padding: '40px 10px' }}>
           <MaterialTable
             title="Reserve Books You Like"

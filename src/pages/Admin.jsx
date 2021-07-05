@@ -1,7 +1,7 @@
 import React, { Component, memo } from 'react';
 import { Tab, Tabs } from '@material-ui/core';
-import BookList from './BookList';
-import ReservationList from './ReservationList';
+import BookList from '../components/BookList';
+import ReservationList from '../components/ReservationList';
 
 class Admin extends Component {
   constructor() {
@@ -30,9 +30,6 @@ class Admin extends Component {
     }
     return (
       <>
-        <div>
-          Admin
-        </div>
         <div style={{ padding: '10px 20px' }}>
           <Tabs
             value={tabIndex}
