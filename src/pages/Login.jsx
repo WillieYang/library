@@ -3,13 +3,12 @@ import {
   Container, Typography, TextField,
   FormControlLabel, Checkbox, Button,
 } from '@material-ui/core';
-import { Link, Route, Switch } from 'react-router-dom';
-import Admin from './Admin';
+import { Link } from 'react-router-dom';
 
 class Login extends Component {
   render() {
     return (
-      <div>
+      <div style={{ height: '100%', display: 'flex', alignItems: 'center' }}>
         <Container component="main" maxWidth="xs">
           <div>
             <Typography component="h1" variant="h5">
