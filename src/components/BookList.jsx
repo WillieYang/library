@@ -71,7 +71,7 @@ class BookList extends Component {
     return (
       <>
         <div id="button" style={{ height: '56px' }}>
-          <Button variant="contained" color="primary" style={{ margin: '10px', float: 'right' }} onClick={this.showAddBook}>Add Book</Button>
+          <Button variant="contained" color="primary" style={{ float: 'right' }} onClick={this.showAddBook}>Add Book</Button>
         </div>
         <Dialog open={showDialog} onClose={this.handleClose} aria-labelledby="form-dialog-title">
           <DialogTitle id="form-dialog-title">Add Book</DialogTitle>

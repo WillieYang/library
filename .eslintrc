@@ -22,7 +22,8 @@
     "no-shadow": 0,
     "no-underscore-dangle": 0,
     "no-param-reassign": 0,
-    "import/no-extraneous-dependencies": 0
+    "import/no-extraneous-dependencies": 0,
+    "max-len": [2, 150, 2, {"ignoreUrls": true}]
   },
   "settings": {
     "import/resolver": {

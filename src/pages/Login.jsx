@@ -55,7 +55,7 @@ class Login extends Component {
                   //   </Button>
                   // ) : (
                 <>
-                  <Link to="/admin" className="noDecoration">
+                  <Link to="/signUp" className="noDecoration">
                     <span className="normalItalic">Not a Member, register!</span>
                   </Link>
                   <Button
