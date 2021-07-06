@@ -7,8 +7,8 @@ import { Route, Switch } from 'react-router-dom';
 import Header from './components/Header';
 
 // Pages
-import Admin from './pages/Admin';
-import User from './pages/User';
+import Admin from './pages/Admin/Admin';
+import User from './pages/User/User';
 import Login from './pages/Login';
 import SignUp from './pages/SignUp';
 

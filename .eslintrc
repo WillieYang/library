@@ -23,7 +23,8 @@
     "no-underscore-dangle": 0,
     "no-param-reassign": 0,
     "import/no-extraneous-dependencies": 0,
-    "max-len": [2, 200, 2, {"ignoreUrls": true}]
+    "max-len": [2, 200, 2, {"ignoreUrls": true}],
+    "import/prefer-default-export": "off"
   },
   "settings": {
     "import/resolver": {

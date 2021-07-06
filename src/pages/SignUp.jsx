@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import {
   Container, Typography, TextField, Button,
 } from '@material-ui/core';
 import { Link } from 'react-router-dom';
+import { createUser } from '../store/userList/userList.actions';
+import Message from '../components/Message';
 
 class SignUp extends Component {
   constructor(props) {
@@ -11,6 +14,9 @@ class SignUp extends Component {
       username: '',
       password: '',
       confirmedPassword: '',
+      showMessage: false,
+      infoMsg: '',
+      severity: '',
     };
   }
 
@@ -20,12 +26,33 @@ class SignUp extends Component {
 
   signUp = () => {
     const { username, password, confirmedPassword } = this.state;
+    this.setState({
+      showMessage: true,
+      infoMsg: 'A new use has been created, please login!',
+      severity: 'success',
+    });
+  }
+
+  handleMessageClose = () => {
+    this.setState({
+      showMessage: false,
+    });
   }
 
   render() {
-    const { username, password, confirmedPassword } = this.state;
+    const {
+      username, password, confirmedPassword, showMessage, infoMsg, severity,
+    } = this.state;
     return (
       <div style={{ height: '100%', display: 'flex', alignItems: 'center' }}>
+        <Message
+          showMessage={showMessage}
+          infoMsg={infoMsg}
+          severity={severity}
+          vertical="top"
+          horizontal="center"
+          closeMessage={this.handleMessageClose}
+        />
         <Container component="main" maxWidth="xs">
           <div>
             <Typography component="h1" variant="h5">
@@ -93,4 +120,14 @@ class SignUp extends Component {
   }
 }
 
-export default SignUp;
+const mapStateToProps = state => ({
+  loginUser: state.loginUser,
+});
+
+const mapDispatchToProps = (dispatch, ownProps) => ({
+  createUser(data) {
+    dispatch(createUser(data));
+  },
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignUp);

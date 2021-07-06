@@ -1,7 +1,7 @@
 import React, { Component, memo } from 'react';
 import { Tab, Tabs } from '@material-ui/core';
-import BookList from '../components/BookList';
-import ReservationList from '../components/ReservationList';
+import BookList from './BookList';
+import ReservationList from './ReservationList';
 
 class Admin extends Component {
   constructor() {

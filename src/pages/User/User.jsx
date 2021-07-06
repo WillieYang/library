@@ -7,8 +7,8 @@ import {
 } from '@material-ui/core';
 import EventSeatIcon from '@material-ui/icons/EventSeat';
 import PropTypes from 'prop-types';
-import { getBookList } from '../store/bookList/bookList.actions';
-import { createReservation } from '../store/reservationList/reservationList.actions';
+import { getBookList } from '../../store/bookList/bookList.actions';
+import { createReservation } from '../../store/reservationList/reservationList.actions';
 
 class User extends Component {
   static propTypes = {

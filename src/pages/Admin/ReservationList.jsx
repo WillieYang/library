@@ -6,7 +6,7 @@ import {
   DialogContent, DialogContentText, DialogTitle,
 } from '@material-ui/core';
 import PropTypes from 'prop-types';
-import { createReservation, getReservationList, clearReservation } from '../store/reservationList/reservationList.actions';
+import { createReservation, getReservationList, clearReservation } from '../../store/reservationList/reservationList.actions';
 
 class ReservationList extends Component {
   static propTypes = {
