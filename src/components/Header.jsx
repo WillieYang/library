@@ -12,6 +12,7 @@ import { unsetLogin } from '../store/userList/userList.actions';
 class Header extends Component {
   static propTypes = {
     unsetLogin: PropTypes.func.isRequired,
+    loginRes: PropTypes.func.isRequired,
   }
 
   logOut = () => {
@@ -20,25 +21,30 @@ class Header extends Component {
   }
 
   render() {
+    const { loginRes } = this.props;
     return (
       <div>
         <AppBar position="static">
           <Toolbar>
             <Typography variant="h6" style={{ display: 'flex', width: '100%' }}>
-              <NavLink style={{ textDecoration: 'none', color: 'white', flex: 7 }} exact to="/">
+              <div style={{ flex: 7 }}>
                 <MenuBookIcon style={{
                   fontSize: '30px', position: 'relative', top: '5px', right: '10px',
                 }}
                 />
                 <span>Library MS</span>
-              </NavLink>
+              </div>
               <div style={{
                 fontSize: '25px', flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'flex-end',
               }}
               >
-                <Link to="/" onClick={this.logOut}>
-                  <ExitToAppIcon style={{ color: 'white' }} />
-                </Link>
+                {
+                  loginRes.token ? (
+                    <Link to="/" onClick={this.logOut}>
+                      <ExitToAppIcon style={{ color: 'white' }} />
+                    </Link>
+                  ) : <></>
+                }
               </div>
             </Typography>
           </Toolbar>
