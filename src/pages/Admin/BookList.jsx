@@ -42,7 +42,6 @@ class BookList extends Component {
     } else if (type === 'storage') {
       this.setState({ storage: event.target.value });
     }
-    console.log(event.target.value);
   }
 
   handleClose = () => {
@@ -53,7 +52,6 @@ class BookList extends Component {
     const { bookName, description, storage } = this.state;
     const { getBookList, createBook } = this.props;
     const data = { name: bookName, description, storage };
-    console.log('data', data);
     await createBook(data);
     await getBookList();
     this.setState({ showDialog: false });
@@ -62,7 +60,6 @@ class BookList extends Component {
   render() {
     const { showDialog } = this.state;
     const { bookList } = this.props;
-    console.log('booklist', bookList);
     const columns = [
       { title: 'Book Name', field: 'name' },
       { title: 'Description', field: 'description' },

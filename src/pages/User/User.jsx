@@ -36,7 +36,6 @@ class User extends Component {
   }
 
   reserveBooks = (event, rowData) => {
-    console.log('reserveBooks');
     this.setState({
       showDialog: true,
       bookId: rowData._id,
@@ -57,7 +56,6 @@ class User extends Component {
     } else if (type === 'username') {
       this.setState({ username: event.target.value });
     }
-    console.log(event.target.value);
   }
 
   handleReservation = async () => {

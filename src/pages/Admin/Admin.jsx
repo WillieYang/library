@@ -12,7 +12,6 @@ class Admin extends Component {
   }
 
   handleChange = (event, newValue) => {
-    console.log(newValue);
     this.setState({ tabIndex: newValue });
   }
 

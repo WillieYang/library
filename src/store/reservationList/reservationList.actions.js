@@ -9,29 +9,22 @@ const getReservationList = data => async (dispatch, getState) => {
     const res = await API.get('/api/reservations');
     dispatch({ type: constants.RESERVATION_LIST, data: res.data });
   } catch (e) {
-    console.log('Failed', e);
     dispatch({ type: constants.GET_RESERVATION_LIST_FAILED, data: e });
   }
 };
 
 const createReservation = data => async (dispatch, getState) => {
   try {
-    console.log('action data', data);
     await API.post('/api/reservations', Qs.stringify(data));
-    // dispatch({ type: constants.RESERVATION_LIST, data: res.data });
   } catch (e) {
-    console.log('Failed', e);
     dispatch({ type: constants.GET_RESERVATION_LIST_FAILED, data: e });
   }
 };
 
 const clearReservation = data => async (dispatch, getState) => {
   try {
-    console.log('action data', data);
     await API.delete(`reservations/${data}`);
-    // dispatch({ type: constants.RESERVATION_LIST, data: res.data });
   } catch (e) {
-    console.log('Failed', e);
     dispatch({ type: constants.GET_RESERVATION_LIST_FAILED, data: e });
   }
 };

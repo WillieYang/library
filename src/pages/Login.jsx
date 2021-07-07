@@ -4,7 +4,7 @@ import {
   Container, Typography, TextField,
   FormControlLabel, Checkbox, Button,
 } from '@material-ui/core';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { loginUser, unsetLogin } from '../store/userList/userList.actions';
 import Message from '../components/Message';
@@ -41,6 +41,9 @@ class Login extends Component {
 
   render() {
     const { loginRes } = this.props;
+    if (loginRes.token) {
+      return <Redirect to="/admin" />;
+    }
     return (
       <div style={{ height: '100%', display: 'flex', alignItems: 'center' }}>
         {

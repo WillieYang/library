@@ -26,8 +26,9 @@ const loginUser = data => async (dispatch, getState) => {
   try {
     const res = await API.post('/api/login', Qs.stringify(data));
     loginRes = {
-      infoMsg: 'A new use has been created, please login!',
       status: res.data.status,
+      token: res.data.token,
+      result: res.data.result,
     };
     dispatch({ type: constants.LOGIN_USER, data: loginRes });
   } catch (e) {

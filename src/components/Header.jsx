@@ -5,9 +5,20 @@ import Typography from '@material-ui/core/Typography';
 import { NavLink, Link } from 'react-router-dom';
 import MenuBookIcon from '@material-ui/icons/MenuBook';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { unsetLogin } from '../store/userList/userList.actions';
 
 class Header extends Component {
+  static propTypes = {
+    unsetLogin: PropTypes.func.isRequired,
+  }
+
+  logOut = () => {
+    const { unsetLogin } = this.props;
+    unsetLogin();
+  }
+
   render() {
     return (
       <div>
@@ -25,7 +36,7 @@ class Header extends Component {
                 fontSize: '25px', flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'flex-end',
               }}
               >
-                <Link to="/">
+                <Link to="/" onClick={this.logOut}>
                   <ExitToAppIcon style={{ color: 'white' }} />
                 </Link>
               </div>
@@ -37,4 +48,14 @@ class Header extends Component {
   }
 }
 
-export default Header;
+const mapStateToProps = state => ({
+  loginRes: state.loginRes,
+});
+
+const mapDispatchToProps = (dispatch, ownProps) => ({
+  unsetLogin(data) {
+    dispatch(unsetLogin(data));
+  },
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);
