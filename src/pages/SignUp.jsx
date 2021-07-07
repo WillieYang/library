@@ -44,14 +44,13 @@ class SignUp extends Component {
       username, password, confirmedPassword,
     } = this.state;
     const { signUpRes } = this.props;
-    console.log(signUpRes);
     return (
       <div style={{ height: '100%', display: 'flex', alignItems: 'center' }}>
         {
           Object.keys(signUpRes).length !== 0 ? (
             <Message
               infoMsg={signUpRes.infoMsg}
-              severity={signUpRes.severity}
+              status={signUpRes.status}
               vertical="top"
               horizontal="center"
               closeMessage={this.handleMessageClose}

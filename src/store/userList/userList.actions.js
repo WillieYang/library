@@ -7,21 +7,35 @@ const createUser = data => async (dispatch, getState) => {
   let signUpRes = '';
   try {
     const res = await API.post('/api/users', Qs.stringify(data));
-    if (res.data.status === 201) {
-      signUpRes = {
-        infoMsg: 'A new use has been created, please login!',
-        severity: 'success',
-      };
-    }
+    signUpRes = {
+      infoMsg: 'A new use has been created, please login!',
+      status: res.data.status,
+    };
     dispatch({ type: constants.SIGN_UP_USER, data: signUpRes });
   } catch (e) {
-    if (e.response.data.status === 500) {
-      signUpRes = {
-        infoMsg: e.response.data.error.errmsg,
-        severity: 'error',
-      };
-    }
+    signUpRes = {
+      infoMsg: e.response.data.error.errmsg,
+      status: e.response.data.status,
+    };
     dispatch({ type: constants.SIGN_UP_FAILED, data: signUpRes });
+  }
+};
+
+const loginUser = data => async (dispatch, getState) => {
+  let loginRes = '';
+  try {
+    const res = await API.post('/api/login', Qs.stringify(data));
+    loginRes = {
+      infoMsg: 'A new use has been created, please login!',
+      status: res.data.status,
+    };
+    dispatch({ type: constants.LOGIN_USER, data: loginRes });
+  } catch (e) {
+    loginRes = {
+      infoMsg: e.response.data.error,
+      status: e.response.data.status,
+    };
+    dispatch({ type: constants.LOGIN_FAILED, data: loginRes });
   }
 };
 
@@ -29,7 +43,13 @@ const unsetSignUp = data => async (dispatch, getState) => {
   dispatch({ type: constants.SIGN_UP_UNSET, data: {} });
 };
 
+const unsetLogin = data => async (dispatch, getState) => {
+  dispatch({ type: constants.LOGIN_UNSET, data: {} });
+};
+
 export {
   createUser,
   unsetSignUp,
+  loginUser,
+  unsetLogin,
 };

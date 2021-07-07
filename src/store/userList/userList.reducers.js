@@ -15,13 +15,13 @@ import * as constants from './userList.constants';
 //   }
 // };
 
-const loginUser = (state = defaultState.loginUser, action) => {
+const loginRes = (state = defaultState.loginRes, action) => {
   switch (action.type) {
     case constants.LOGIN_USER:
       return action.data;
-    case constants.LOGIN_START:
-      return action.data;
     case constants.LOGIN_FAILED:
+      return action.data;
+    case constants.LOGIN_UNSET:
       return action.data;
     default:
       return state;
@@ -44,5 +44,5 @@ const signUpRes = (state = defaultState.signUpRes, action) => {
 export default {
   // userList,
   signUpRes,
-  loginUser,
+  loginRes,
 };

@@ -1,5 +1,5 @@
 export default {
   userList: [],
-  loginUser: '',
+  loginRes: {},
   signUpRes: {},
 };
