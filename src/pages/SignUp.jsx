@@ -4,19 +4,23 @@ import {
   Container, Typography, TextField, Button,
 } from '@material-ui/core';
 import { Link } from 'react-router-dom';
-import { createUser } from '../store/userList/userList.actions';
+import PropTypes from 'prop-types';
+import { createUser, unsetSignUp } from '../store/userList/userList.actions';
 import Message from '../components/Message';
 
 class SignUp extends Component {
+  static propTypes = {
+    createUser: PropTypes.func.isRequired,
+    unsetSignUp: PropTypes.func.isRequired,
+    signUpRes: PropTypes.object.isRequired,
+  }
+
   constructor(props) {
     super(props);
     this.state = {
       username: '',
       password: '',
       confirmedPassword: '',
-      showMessage: false,
-      infoMsg: '',
-      severity: '',
     };
   }
 
@@ -24,35 +28,36 @@ class SignUp extends Component {
     this.setState({ [type]: event.target.value });
   }
 
-  signUp = () => {
-    const { username, password, confirmedPassword } = this.state;
-    this.setState({
-      showMessage: true,
-      infoMsg: 'A new use has been created, please login!',
-      severity: 'success',
-    });
+  signUp = async () => {
+    const { username, password } = this.state;
+    const { createUser } = this.props;
+    await createUser({ username, password });
   }
 
   handleMessageClose = () => {
-    this.setState({
-      showMessage: false,
-    });
+    const { unsetSignUp } = this.props;
+    unsetSignUp();
   }
 
   render() {
     const {
-      username, password, confirmedPassword, showMessage, infoMsg, severity,
+      username, password, confirmedPassword,
     } = this.state;
+    const { signUpRes } = this.props;
+    console.log(signUpRes);
     return (
       <div style={{ height: '100%', display: 'flex', alignItems: 'center' }}>
-        <Message
-          showMessage={showMessage}
-          infoMsg={infoMsg}
-          severity={severity}
-          vertical="top"
-          horizontal="center"
-          closeMessage={this.handleMessageClose}
-        />
+        {
+          Object.keys(signUpRes).length !== 0 ? (
+            <Message
+              infoMsg={signUpRes.infoMsg}
+              severity={signUpRes.severity}
+              vertical="top"
+              horizontal="center"
+              closeMessage={this.handleMessageClose}
+            />
+          ) : <></>
+        }
         <Container component="main" maxWidth="xs">
           <div>
             <Typography component="h1" variant="h5">
@@ -84,7 +89,7 @@ class SignUp extends Component {
                 onChange={(event) => { this.handleTextFieldChange('password', event); }}
               />
               <TextField
-                error={confirmedPassword !== password && password && confirmedPassword}
+                error={!!(confirmedPassword !== password && password && confirmedPassword)}
                 helperText={(confirmedPassword !== password && password && confirmedPassword) ? 'Confirmed password and password should be the same.' : ''}
                 variant="outlined"
                 margin="normal"
@@ -121,12 +126,15 @@ class SignUp extends Component {
 }
 
 const mapStateToProps = state => ({
-  loginUser: state.loginUser,
+  signUpRes: state.signUpRes,
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   createUser(data) {
     dispatch(createUser(data));
+  },
+  unsetSignUp(data) {
+    dispatch(unsetSignUp(data));
   },
 });
 

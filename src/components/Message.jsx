@@ -20,11 +20,11 @@ class Message extends Component {
 
   render() {
     const {
-      showMessage, infoMsg, severity, vertical, horizontal,
+      infoMsg, severity, vertical, horizontal,
     } = this.props;
     return (
       <>
-        <Snackbar open={showMessage} autoHideDuration={6000} onClose={this.handleClose} anchorOrigin={{ vertical, horizontal }}>
+        <Snackbar open autoHideDuration={6000} onClose={this.handleClose} anchorOrigin={{ vertical, horizontal }}>
           <MuiAlert onClose={this.handleClose} severity={severity} elevation={6} variant="filled">
             {infoMsg}
           </MuiAlert>

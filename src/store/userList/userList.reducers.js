@@ -28,13 +28,13 @@ const loginUser = (state = defaultState.loginUser, action) => {
   }
 };
 
-const signUpUser = (state = defaultState.signUpUser, action) => {
+const signUpRes = (state = defaultState.signUpRes, action) => {
   switch (action.type) {
     case constants.SIGN_UP_USER:
       return action.data;
-    case constants.SIGN_UP_START:
-      return action.data;
     case constants.SIGN_UP_FAILED:
+      return action.data;
+    case constants.SIGN_UP_UNSET:
       return action.data;
     default:
       return state;
@@ -43,6 +43,6 @@ const signUpUser = (state = defaultState.signUpUser, action) => {
 
 export default {
   // userList,
-  signUpUser,
+  signUpRes,
   loginUser,
 };
