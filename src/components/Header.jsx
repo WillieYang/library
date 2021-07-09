@@ -8,20 +8,21 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { unsetLogin } from '../store/userList/userList.actions';
+import cookies from '../utils/cookies';
 
 class Header extends Component {
   static propTypes = {
     unsetLogin: PropTypes.func.isRequired,
-    loginRes: PropTypes.func.isRequired,
   }
 
   logOut = () => {
     const { unsetLogin } = this.props;
     unsetLogin();
+    cookies.remove('token', { path: '/' });
   }
 
   render() {
-    const { loginRes } = this.props;
+    const token = cookies.get('token');
     return (
       <div>
         <AppBar position="static">
@@ -39,7 +40,7 @@ class Header extends Component {
               }}
               >
                 {
-                  loginRes.token ? (
+                  token ? (
                     <Link to="/" onClick={this.logOut}>
                       <ExitToAppIcon style={{ color: 'white' }} />
                     </Link>

@@ -8,6 +8,7 @@ import { Link, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { loginUser, unsetLogin } from '../store/userList/userList.actions';
 import Message from '../components/Message';
+import cookies from '../utils/cookies';
 
 class Login extends Component {
   static propTypes = {
@@ -41,7 +42,8 @@ class Login extends Component {
 
   render() {
     const { loginRes } = this.props;
-    if (loginRes.token) {
+    const token = cookies.get('token');
+    if (token) {
       return <Redirect to="/admin" />;
     }
     return (

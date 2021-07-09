@@ -1,5 +1,6 @@
 import Qs from 'qs';
 import request from '../../utils/request';
+import cookies from '../../utils/cookies';
 
 import * as constants from './userList.constants';
 
@@ -25,6 +26,9 @@ const loginUser = data => async (dispatch, getState) => {
   let loginRes = '';
   try {
     const res = await request.post('/api/login', Qs.stringify(data));
+    const date = new Date();
+    date.setDate(date.getDate() + 1);
+    cookies.set('token', res.data.token, { path: '/', expires: date });
     loginRes = {
       status: res.data.status,
       token: res.data.token,
