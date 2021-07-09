@@ -1,12 +1,12 @@
 import Qs from 'qs';
-import API from '../../utils/API';
+import request from '../../utils/request';
 
 import * as constants from './userList.constants';
 
 const createUser = data => async (dispatch, getState) => {
   let signUpRes = '';
   try {
-    const res = await API.post('/api/users', Qs.stringify(data));
+    const res = await request.post('/api/users', Qs.stringify(data));
     signUpRes = {
       infoMsg: 'A new use has been created, please login!',
       status: res.data.status,
@@ -24,7 +24,7 @@ const createUser = data => async (dispatch, getState) => {
 const loginUser = data => async (dispatch, getState) => {
   let loginRes = '';
   try {
-    const res = await API.post('/api/login', Qs.stringify(data));
+    const res = await request.post('/api/login', Qs.stringify(data));
     loginRes = {
       status: res.data.status,
       token: res.data.token,

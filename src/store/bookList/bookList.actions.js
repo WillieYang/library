@@ -1,13 +1,13 @@
 import Qs from 'qs';
-import API from '../../utils/API';
+import request from '../../utils/request';
 
 import * as constants from './bookList.constants';
 
 const getBookList = data => async (dispatch, getState) => {
   dispatch({ type: constants.GET_BOOK_LIST_START, data: [] });
   try {
-    const res = await API.get('/api/books');
-    dispatch({ type: constants.BOOK_LIST, data: res.data });
+    const res = await request.get('/api/books');
+    dispatch({ type: constants.BOOK_LIST, data: res.data.result });
   } catch (e) {
     dispatch({ type: constants.GET_BOOK_LIST_FAILED, data: e });
   }
@@ -15,7 +15,7 @@ const getBookList = data => async (dispatch, getState) => {
 
 const createBook = data => async (dispatch, getState) => {
   try {
-    await API.post('/api/books', Qs.stringify(data));
+    await request.post('/api/books', Qs.stringify(data));
   } catch (e) {
     dispatch({ type: constants.GET_BOOK_LIST_FAILED, data: e });
   }

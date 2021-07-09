@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API = axios.create({
+const request = axios.create({
   baseURL: `${window.location.origin}`,
   responseType: 'json',
   headers: {
@@ -9,4 +9,4 @@ const API = axios.create({
   },
 });
 
-export default API;
+export default request;

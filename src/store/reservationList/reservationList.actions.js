@@ -1,12 +1,12 @@
 import Qs from 'qs';
-import API from '../../utils/API';
+import request from '../../utils/request';
 
 import * as constants from './reservationList.constants';
 
 const getReservationList = data => async (dispatch, getState) => {
   dispatch({ type: constants.GET_RESERVATION_LIST_START, data: [] });
   try {
-    const res = await API.get('/api/reservations');
+    const res = await request.get('/api/reservations');
     dispatch({ type: constants.RESERVATION_LIST, data: res.data });
   } catch (e) {
     dispatch({ type: constants.GET_RESERVATION_LIST_FAILED, data: e });
@@ -15,7 +15,7 @@ const getReservationList = data => async (dispatch, getState) => {
 
 const createReservation = data => async (dispatch, getState) => {
   try {
-    await API.post('/api/reservations', Qs.stringify(data));
+    await request.post('/api/reservations', Qs.stringify(data));
   } catch (e) {
     dispatch({ type: constants.GET_RESERVATION_LIST_FAILED, data: e });
   }
@@ -23,7 +23,7 @@ const createReservation = data => async (dispatch, getState) => {
 
 const clearReservation = data => async (dispatch, getState) => {
   try {
-    await API.delete(`reservations/${data}`);
+    await request.delete(`reservations/${data}`);
   } catch (e) {
     dispatch({ type: constants.GET_RESERVATION_LIST_FAILED, data: e });
   }
