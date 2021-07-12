@@ -1,18 +1,13 @@
 import React, { Component } from 'react';
-// import { MenuList, MenuItem } from '@material-ui/core';
-// import { Link, Route, Switch } from 'react-router-dom';
 import { Route, Switch } from 'react-router-dom';
-
-// Components
 import Header from './components/Header';
-
+import PrivateRoute from './components/PrivateRoute';
+import './App.css';
 // Pages
 import Admin from './pages/Admin/Admin';
 import User from './pages/User/User';
 import Login from './pages/Login';
 import SignUp from './pages/SignUp';
-
-import './App.css';
 
 class App extends Component {
   render() {
@@ -20,20 +15,10 @@ class App extends Component {
       <div style={{ height: '60vh' }}>
         <Header />
         <div style={{ height: '100%' }}>
-          {/* <div style={{ width: '10%', flex: 1 }}>
-            <MenuList>
-              <MenuItem component={Link} to="/admin">
-                Admin
-              </MenuItem>
-              <MenuItem component={Link} to="/user">
-                User
-              </MenuItem>
-            </MenuList>
-          </div> */}
           <Switch>
             <Route path="/" exact component={Login} />
-            <Route path="/admin" exact component={Admin} />
-            <Route path="/user" exact component={User} />
+            <PrivateRoute path="/admin" exact component={Admin} />
+            <PrivateRoute path="/user" exact component={User} />
             <Route path="/signUp" exact component={SignUp} />
           </Switch>
         </div>
