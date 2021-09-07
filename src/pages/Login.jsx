@@ -7,6 +7,7 @@ import {
 import { Link, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { loginUser, unsetLogin } from '../store/userList/userList.actions';
+import { showMessage } from '../store/globalMessage/globalMessage.actions';
 import Message from '../components/Message';
 import cookies from '../utils/cookies';
 
@@ -15,6 +16,7 @@ class Login extends Component {
     loginUser: PropTypes.func.isRequired,
     loginRes: PropTypes.object.isRequired,
     unsetLogin: PropTypes.func.isRequired,
+    showMessage: PropTypes.func.isRequired,
   }
 
   constructor(props) {
@@ -41,7 +43,10 @@ class Login extends Component {
   }
 
   render() {
-    const { loginRes } = this.props;
+    const { loginRes, showMessage } = this.props;
+    if (loginRes.status === 200) {
+      showMessage({ status: loginRes.status, infoMsg: `User: ${loginRes.result.username} login Successfully` });
+    }
     const { username } = this.state;
     const token = cookies.get('token');
     if (token) {
@@ -97,31 +102,19 @@ class Login extends Component {
                 control={<Checkbox value="remember" color="primary" />}
                 label="Remember me"
               />
-              {
-                  // ifSigning ? (
-                  //   <Button
-                  //     fullWidth
-                  //     variant="contained"
-                  //     color="primary"
-                  //     disabled
-                  //   >
-                  //     Signing In...
-                  //   </Button>
-                  // ) : (
-                <>
-                  <Link to="/signUp" className="noDecoration">
-                    <span className="normalItalic">Not a Member, register!</span>
-                  </Link>
-                  <Button
-                    fullWidth
-                    variant="contained"
-                    color="primary"
-                    onClick={this.login}
-                  >
-                    Sign In
-                  </Button>
-                </>
-                }
+              <>
+                <Link to="/signUp" className="noDecoration">
+                  <span className="normalItalic">Not a Member, register!</span>
+                </Link>
+                <Button
+                  fullWidth
+                  variant="contained"
+                  color="primary"
+                  onClick={this.login}
+                >
+                  Sign In
+                </Button>
+              </>
             </form>
           </div>
         </Container>
@@ -140,6 +133,9 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   },
   unsetLogin(data) {
     dispatch(unsetLogin(data));
+  },
+  showMessage(data) {
+    dispatch(showMessage(data));
   },
 });
 
