@@ -29,6 +29,7 @@ const loginUser = data => async (dispatch, getState) => {
     const date = new Date();
     date.setDate(date.getDate() + 1);
     cookies.set('token', res.data.token, { path: '/', expires: date });
+    cookies.set('username', res.data.result.username, { path: '/', expires: date });
     loginRes = {
       status: res.data.status,
       token: res.data.token,
@@ -37,8 +38,8 @@ const loginUser = data => async (dispatch, getState) => {
     dispatch({ type: constants.LOGIN_USER, data: loginRes });
   } catch (e) {
     loginRes = {
-      infoMsg: e.response.data.error,
-      status: e.response.data.status,
+      infoMsg: e.response.data ? e.response.data.error : 'Server Crashed, please contact the administrator!',
+      status: e.response.data ? e.response.data.status : 500,
     };
     dispatch({ type: constants.LOGIN_FAILED, data: loginRes });
   }

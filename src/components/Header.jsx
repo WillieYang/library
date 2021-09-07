@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
 import { Link } from 'react-router-dom';
-import MenuBookIcon from '@material-ui/icons/MenuBook';
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import {
+  AppBar, Toolbar, Typography, Tooltip,
+} from '@material-ui/core';
+import { MenuBook as MenuBookIcon, ExitToApp as ExitToAppIcon } from '@material-ui/icons';
 import { unsetLogin } from '../store/userList/userList.actions';
 import cookies from '../utils/cookies';
+import { clearAllCookies } from '../utils/helpers';
 
 class Header extends Component {
   static propTypes = {
@@ -18,7 +18,7 @@ class Header extends Component {
   logOut = () => {
     const { unsetLogin } = this.props;
     unsetLogin();
-    cookies.remove('token', { path: '/' });
+    clearAllCookies();
   }
 
   render() {
@@ -42,7 +42,9 @@ class Header extends Component {
                 {
                   token ? (
                     <Link to="/" onClick={this.logOut}>
-                      <ExitToAppIcon style={{ color: 'white' }} />
+                      <Tooltip placement="left" title={<span style={{ fontSize: '12px' }}>Log Out</span>}>
+                        <ExitToAppIcon style={{ color: 'white' }} />
+                      </Tooltip>
                     </Link>
                   ) : <></>
                 }

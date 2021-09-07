@@ -42,9 +42,13 @@ class Login extends Component {
 
   render() {
     const { loginRes } = this.props;
+    const { username } = this.state;
     const token = cookies.get('token');
     if (token) {
-      return <Redirect to="/admin" />;
+      if (username === 'admin') {
+        return <Redirect to="/admin" />;
+      }
+      return <Redirect to="/user" />;
     }
     return (
       <div style={{ height: '100%', display: 'flex', alignItems: 'center' }}>
